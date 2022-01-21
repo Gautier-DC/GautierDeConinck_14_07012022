@@ -5,6 +5,7 @@ import colors from "../utils/style/colors";
 import SimpleInput from "../Components/SimpleInput";
 import EmployeeContainer from "../Components/EmployeeContainer";
 import AdressContainer from "../Components/AdressContainer";
+import HeaderLanding from "../Components/HeaderLanding";
 
 const Title = styled.h1`
   color: ${colors.primary};
@@ -37,15 +38,18 @@ const SaveBtn = styled.button`
 
 export default function Home() {
   return (
-    <main>
-      <Title>Create Employee</Title>
-      <Form>
-        <EmployeeContainer />
-        <AdressContainer />
-      </Form>
-      <SaveBtn type="submit" value="submit">
-        Save
-      </SaveBtn>
-    </main>
+    <>
+      <HeaderLanding />
+      <main>
+        <Title>Create Employee</Title>
+        <Form>
+          <EmployeeContainer />
+          <AdressContainer />
+        </Form>
+        <SaveBtn type="submit" value="submit">
+          Save
+        </SaveBtn>
+      </main>
+    </>
   );
 }

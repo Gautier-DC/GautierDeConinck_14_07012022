@@ -3,6 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import SimpleInput from "../Components/SimpleInput";
 import SelectInput from "./SelectInput";
+import DateInput from "./DateInput";
 import { departments } from "../selectLists";
 
 const EmployeeCtnr = styled.div`
@@ -25,8 +26,8 @@ export default function EmployeeContainer() {
     <EmployeeCtnr>
       <SimpleInput type="text" backLabel="first-name" label="First Name" setFunction={setFirstName} required />
       <SimpleInput type="text" backLabel="last-name" label="Last Name" setFunction={setLastName} required />
-      <SimpleInput type="date" backLabel="date-of-birth" label="Date of Birth" setFunction={setBirthDate} required />
-      <SimpleInput type="date" backLabel="start-date" label="Start Date" setFunction={setStartDate} required />
+      <DateInput backLabel="date-of-birth" label="Date of Birth" setFunction={setBirthDate} required />
+      <DateInput backLabel="start-date" label="Start Date" setFunction={setStartDate} required />
       <SelectInput backLabel="department" label="Department" setFunction={setDepartment} options={departments} />
     </EmployeeCtnr>
   );

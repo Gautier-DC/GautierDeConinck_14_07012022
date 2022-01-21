@@ -36,7 +36,7 @@ const NavItem = styled(Link)`
 
 
 
-export default function Header() {
+export default function HeaderLanding() {
   return (
     <HeaderContainer>
         <HeaderLogo to='/'>

@@ -1,113 +1,154 @@
 import React from "react";
 import DatePicker from "react-datepicker";
 import { useState } from "react";
-import { getMonth, getYear } from "date-fns";
+import { getDate, getMonth, getYear } from "date-fns";
 import range from "lodash/range";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
 import colors from "../utils/style/colors";
 
-const InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  margin-bottom: 1rem;
-  width: 100%;
-  label {
-    font-weight: bold;
-    margin-bottom: 0.5em;
-  }
-  input {
-    width: 100%;
-    padding: 0.2em 0.6em;
-    font-size: 1.2rem;
-    border-radius: 0.2em;
-    border: none;
-    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-  }
-  select{
-      background: none;
-      border: none;
-  }
-`;
+//CSS part
+
+// const InputWrapper = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   text-align: left;
+//   margin-bottom: 1rem;
+//   width: 100%;
+//   position: relative;
+//   label {
+//     font-weight: bold;
+//     margin-bottom: 0.5em;
+//   }
+//   input {
+//     width: 100%;
+//     padding: 0.5em 0.6em;
+//     border-radius: 0.2em;
+//     border: none;
+//     box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+//   }
+// `;
 
 const CustomDatePicker = styled(DatePicker)`
-  width: 800px;
+  width: 100%;
 `;
-const CustomArrow = styled.button`
-  font-weight: 700;
-  color: ${colors.tertiary};
+
+const Arrow = styled.button`
+  background-color: #f0f0f0;
+  appearance: none;
+  user-select: none;
+  outline: none !important;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  padding: 0;
   border: none;
-  font-size: 1.5em;
+  border-top: 0.8em solid transparent;
+  border-bottom: 0.8em solid transparent;
+  transition: all 0.25s ease-out;
+`;
+
+const ArrowLeft = styled(Arrow)`
+  border-right: 1.2em solid #ccc;
+  left: 0.5em;
   :hover {
-    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    border-right-color: ${colors.secondary};
   }
 `;
 
-export default function DateInput({ backLabel, label, required }) {
-  const [startDate, setStartDate] = useState(new Date());
-  const years = range(1940, getYear(new Date()) + 1, 1);
-  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  return (
-    <InputWrapper>
-      <label htmlFor={backLabel}>{label}</label>
-      <CustomDatePicker
-        id={backLabel}
-        name={backLabel}
-        selected={startDate}
-        onChange={(date) => setStartDate(date)}
-        renderCustomHeader={({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled }) => (
-          <div
-            style={{
-              marginBottom: '10px',
-              padding: "0 7px",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <CustomArrow onClick={decreaseMonth} disabled={prevMonthButtonDisabled}>
-              {"◄"}
-            </CustomArrow>
-            <select value={months[date.getMonth()]} onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}>
-              {months.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
-            <select value={date.getFullYear()} onChange={({ target: { value } }) => changeYear(value)}>
-              {years.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))}
-            </select>
+const ArrowRight = styled(Arrow)`
+  border-left: 1.2em solid #ccc;
+  right: 0.5em;
+  :hover {
+    border-left-color: ${colors.secondary};
+  }
+`;
 
-            <CustomArrow onClick={increaseMonth} disabled={nextMonthButtonDisabled}>
-              {"►"}
-            </CustomArrow>
-          </div>
-        )}
-        dropdownMode="select"
-        required={required ? true : false}
-        todayButton="Today"
-        popperModifiers={[
-          {
-            name: "offset",
-            options: {
-              offset: [5, 10],
-            },
-          },
-          {
-            name: "preventOverflow",
-            options: {
-              rootBoundary: "viewport",
-              tether: false,
-              altAxis: true,
-            },
-          },
-        ]}
-      />
-    </InputWrapper>
+const CalendarHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding: 0 0.5em;
+  div {
+    width: 100%;
+  }
+  option {
+    border: none;
+    padding: 20px;
+  }
+`;
+
+const DateSelect = styled.select`
+  background-color: transparent;
+  border: none;
+  text-align: right;
+  width: 35%;
+`;
+const MonthSelect = styled.select`
+  background-color: transparent;
+  border: none;
+  text-align: right;
+  width: 50%;
+`;
+
+//Function part
+const years = range(1940, getYear(new Date()) + 1, 1);
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+function CustomHeader({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled }) {
+  // const onMonthChange = ({ target: { value } }) => {
+  //   changeMonth(months.indexOf(value));
+  //   setCurrentMonth(value);
+  //   console.log("+++++", currentMonth);
+  // };
+  return (
+    <CalendarHeader>
+      <ArrowLeft onClick={decreaseMonth} disabled={prevMonthButtonDisabled}></ArrowLeft>
+      <div>
+        <MonthSelect value={months[date.getMonth()]}>
+          {months.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </MonthSelect>
+        <DateSelect value={date.getFullYear()} onChange={({ target: { value } }) => changeYear(value)}>
+          {years.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </DateSelect>
+      </div>
+      <ArrowRight onClick={increaseMonth} disabled={nextMonthButtonDisabled}></ArrowRight>
+    </CalendarHeader>
+  );
+}
+
+export default function DateInput({ register, name, registerOptions, ...rest }) {
+  const [startDate, setStartDate] = useState(new Date());
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const renderDayContents = (day, date) => {
+    const tooltipText = `For datessssss: ${date}`;
+    return (
+      <span style={{ backgroundColor: "red" }} title={tooltipText}>
+        {getDate(date)}
+      </span>
+    );
+  };
+  // custom header for date picker
+  return (
+    <CustomDatePicker
+      shouldCloseOnSelect={false}
+      renderCustomHeader={CustomHeader}
+      selected={startDate}
+      dropdownMode="select"
+      todayButton="Today"
+      calendarClassName="calendar-custom"
+      style={{ width: "100%" }}
+      renderDayContents={renderDayContents}
+    />
   );
 }

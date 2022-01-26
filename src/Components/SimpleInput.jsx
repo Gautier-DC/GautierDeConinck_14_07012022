@@ -12,8 +12,7 @@ const InputWrapper = styled.div`
     margin-bottom: 0.5em;
   }
   input {
-    padding: 0.2em 0.6em;
-    font-size: 1.2rem;
+    padding: 0.5em 0.6em;
     border-radius: 0.2em;
     border: none;
     box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;

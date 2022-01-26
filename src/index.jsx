@@ -7,10 +7,9 @@ import normalize from "./normalize.css";
 import colors from "./utils/style/colors";
 
 const GlobalStyle = createGlobalStyle`
-    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;700&family=Roboto:wght@300;400;700&display=swap');
     ${normalize};
     html {
-        font-family: 'Nunito Sans', 'Roboto', Arial, sans-serif;
+        font-family:  'Dongle', 'Merriweather Sans', sans-serif;
         margin: 0;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
@@ -26,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
       background-color: ${colors.primary};
       background-image: url('./hrimage.png');
       background-position: right ;
+      min-width: 350px;
       max-width: 1220px;
       margin: 0 auto;
     }
@@ -34,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
       background-color: rgba(255,255,255, 0.9);
       border-radius: 0 0 1em 1em;
       margin: 0 4em 4em 4em;
-      height: 80vh;
+      //min-height: 80vh;
       padding: 0 2em 2em 2em;
     }
     

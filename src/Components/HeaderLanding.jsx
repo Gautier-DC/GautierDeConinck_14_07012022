@@ -27,6 +27,7 @@ const NavItem = styled(Link)`
   color: ${colors.secondary};
   font-weight: bold;
   padding: 0.5em 1em;
+  transition: all 0.3s;
   :hover {
     background-color: ${colors.tertiary};
     color: #FFF;

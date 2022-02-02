@@ -9,26 +9,6 @@ import colors from "../utils/style/colors";
 
 //CSS part
 
-// const InputWrapper = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   text-align: left;
-//   margin-bottom: 1rem;
-//   width: 100%;
-//   position: relative;
-//   label {
-//     font-weight: bold;
-//     margin-bottom: 0.5em;
-//   }
-//   input {
-//     width: 100%;
-//     padding: 0.5em 0.6em;
-//     border-radius: 0.2em;
-//     border: none;
-//     box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
-//   }
-// `;
-
 const CustomDatePicker = styled(DatePicker)`
   width: 100%;
 `;
@@ -96,7 +76,7 @@ const MonthSelect = styled.select`
 const years = range(1940, getYear(new Date()) + 1, 1);
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-function CustomHeader({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled }) {
+export function CustomHeader({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled }) {
   // const onMonthChange = ({ target: { value } }) => {
   //   changeMonth(months.indexOf(value));
   //   setCurrentMonth(value);
@@ -126,7 +106,7 @@ function CustomHeader({ date, changeYear, changeMonth, decreaseMonth, increaseMo
   );
 }
 
-export default function DateInput({ register, name, registerOptions, ...rest }) {
+export function DateInput({ register, name, registerOptions, ...rest }) {
   const [startDate, setStartDate] = useState(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
@@ -147,7 +127,6 @@ export default function DateInput({ register, name, registerOptions, ...rest }) 
       dropdownMode="select"
       todayButton="Today"
       calendarClassName="calendar-custom"
-      style={{ width: "100%" }}
       renderDayContents={renderDayContents}
     />
   );

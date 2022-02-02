@@ -26,7 +26,7 @@ const GlobalStyle = createGlobalStyle`
       background-image: url('./hrimage.png');
       background-position: right ;
       min-width: 350px;
-      max-width: 1220px;
+      max-width: 1280px;
       margin: 0 auto;
     }
     

@@ -6,7 +6,7 @@ import colors from "../utils/style/colors";
 const HeaderContainer = styled.header`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   margin: 4em 4em 0 4em; 
   padding: 1em 2em;
@@ -17,7 +17,6 @@ const HeaderContainer = styled.header`
 const HeaderLogo = styled(Link)`
   display: flex;
   align-items: center;
-  margin-right: auto;
   img {
     max-width: 100%;
     height: 50px;
@@ -29,12 +28,19 @@ const Title = styled.h1`
   font-size: 2em;
   font-weight: 700;
   margin: 0;
-  margin-right: auto;
-  padding-top: 0.5em;
-  text-align: center;
 `;
 
-
+const NavItem = styled(Link)`
+  color: ${colors.secondary};
+  font-weight: bold;
+  padding: 0.5em 1em;
+  transition: all 0.3s;
+  :hover {
+    background-color: ${colors.tertiary};
+    color: #FFF;
+    border-radius: 0.5em
+  }
+`;
 
 export default function HeaderEmployeeList() {
   return (
@@ -43,6 +49,7 @@ export default function HeaderEmployeeList() {
             <img src="./logo-hrnet-500.png" alt="HRnet logo" />
         </HeaderLogo>
         <Title>Current Employees</Title>
+        <NavItem to='/'>Return Home</NavItem>
     </HeaderContainer>
   )
 }

@@ -125,8 +125,12 @@ const schema = yup
   .object({
     firstName: yup.string().min(2).max(20),
     lastName: yup.string().min(2).max(20),
-    birthDate: yup.string().min(1),
-    startDate: yup.date(),
+    birthDate: yup.date().test("Unique", "Must be a valid date", (value) => {
+      return value;
+    }),
+    startDate: yup.date().test("Unique", "Must be a valid date", (value) => {
+      return value;
+    }),
     department: yup.string(),
     street: yup.string().min(5),
     city: yup.string().min(3),
@@ -172,40 +176,42 @@ export default function EmployeeForm() {
             <Controller
               name="birthDate"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value, ref } }) => (
                 <DatePicker
                   type="date"
                   placeholderText="Select a date"
                   onChange={(date) => {
-                    field.onChange(date);
+                    onChange(date);
                   }}
-                  selected={field.value}
+                  onBlur={onBlur}
+                  selected={value}
                   renderCustomHeader={CustomHeader}
                   todayButton="Today"
                 />
               )}
             />
-            <ErrorField>{errors.birthDate && "Incorrect Date"}</ErrorField>
+            <ErrorField>{errors.birthDate && "There must be a Date"}</ErrorField>
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="startDate">Start date</label>
             <Controller
               name="startDate"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value, ref } }) => (
                 <DatePicker
                   type="date"
                   placeholderText="Select a date"
                   onChange={(date) => {
-                    field.onChange(date);
+                    onChange(date);
                   }}
-                  selected={field.value}
+                  onBlur={onBlur}
+                  selected={value}
                   renderCustomHeader={CustomHeader}
                   todayButton="Today"
                 />
               )}
             />
-            <ErrorField>{errors.startDate && "Incorrect Date"}</ErrorField>
+            <ErrorField>{errors.startDate && "There must be a Date"}</ErrorField>
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="department">Department</label>

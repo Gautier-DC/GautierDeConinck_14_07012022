@@ -5,6 +5,7 @@ import useStore from "../../store";
 import colors from "../../utils/style/colors";
 import { COLUMNS } from "./columns";
 import GlobalFilter from "./GlobalFilter";
+import format from "date-fns/format";
 
 const Styles = styled.div`
   /* This is required to make the table full-width */
@@ -90,7 +91,7 @@ const Styles = styled.div`
     align-items: center;
     padding: 0.5rem;
     margin-top: 1em;
-    button{
+    button {
       color: ${colors.primary};
     }
   }
@@ -104,15 +105,23 @@ const Styles = styled.div`
 
 export default function EmployeesTable() {
   const employees = useStore((state) => state.employees);
-  console.log("Hi there", employees);
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => employees, []);
+
+  //Format date in order to sort it correctly, not used here but in columns.js 
+  const formatedEmployees = employees.map((employee) => {
+    employee.birthDate = format(new Date(employee.birthDate),'yyyy/MM/dd')
+    employee.startDate = format(new Date(employee.startDate),'yyyy/MM/dd')
+    return employee
+  })
+
 
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
+    rows,
     page, // Instead of using 'rows', we'll use page,
     // which has only the rows for the active page
     canPreviousPage,
@@ -136,6 +145,7 @@ export default function EmployeesTable() {
     usePagination
   );
 
+  //console.log("Hi there", rows.length);
   return (
     <Styles>
       <div className="tableWrap">
@@ -183,13 +193,18 @@ export default function EmployeesTable() {
             }
           </thead>
           <tbody {...getTableBodyProps()}>
-            {
+            {rows.length === 0 ? (
+              <tr>
+                <td colSpan="9" style={{ fontSize: "1.5em", backgroundColor: "rgba(229, 80, 57,0.3)" }}>
+                  there is no result
+                </td>
+              </tr>
+            ) : (
               // Loop over the table rows
               page.map((row) => {
                 // Prepare the row for display
                 prepareRow(row);
                 return (
-                  // Apply the row props
                   <tr {...row.getRowProps()}>
                     {
                       // Loop over the rows cells
@@ -208,13 +223,20 @@ export default function EmployeesTable() {
                   </tr>
                 );
               })
-            }
+            )}
           </tbody>
         </table>
         <div className="pagination">
           <div>
             <span>
-              Page{" "}
+              Showing{" "}
+              <strong>
+                {pageSize} to {pageSize} of {rows.length}
+              </strong>{" "}
+              entries
+            </span>
+            <span>
+              | Page{" "}
               <strong>
                 {pageIndex + 1} of {pageOptions.length}
               </strong>{" "}

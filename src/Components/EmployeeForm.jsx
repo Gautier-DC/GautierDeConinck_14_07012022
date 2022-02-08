@@ -8,6 +8,7 @@ import styled from "styled-components";
 import SelectInput from "./SelectInput";
 import { CustomHeader } from "./FeaturesDatepicker";
 import DatePicker from "react-datepicker";
+import { Modal } from "gdc-component-modal";
 import { departments, states } from "../selectLists";
 import colors from "../utils/style/colors";
 
@@ -83,6 +84,14 @@ const InputWrapper = styled.div`
     border: none;
     box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
   }
+  .react-datepicker__day--outside-month {
+    color: #ccc8c8 !important;
+    pointer-events: none;
+  }
+  .react-datepicker__day--selected,
+  .react-datepicker__day--keyboard-selected {
+    background-color: ${colors.primary};
+  }
 `;
 
 const SaveBtn = styled.button`
@@ -127,6 +136,8 @@ const schema = yup
   .required();
 
 export default function EmployeeForm() {
+  const [show, setShow] = useState(false);
+
   const {
     register,
     formState: { errors },
@@ -139,8 +150,9 @@ export default function EmployeeForm() {
     console.log("RESULT", data);
     addEmployee(data);
     reset();
+    setShow(true);
   };
-  console.log(errors);
+  console.log("+++++++", errors);
   return (
     <Form onSubmit={handleSubmit(onSave)}>
       <InfoCtr>
@@ -226,6 +238,9 @@ export default function EmployeeForm() {
         </AdressCtnr>
       </InfoCtr>
       <SaveBtn type="submit">Save</SaveBtn>
+      <Modal title="Employé créé" onClose={() => setShow(false)} show={show}>
+        <p>L'employé a été ajouté à la base !</p>
+      </Modal>
     </Form>
   );
 }

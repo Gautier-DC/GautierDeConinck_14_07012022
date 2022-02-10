@@ -5,7 +5,6 @@ import useStore from "../../store";
 import colors from "../../utils/style/colors";
 import { COLUMNS } from "./columns";
 import GlobalFilter from "./GlobalFilter";
-import format from "date-fns/format";
 
 const Styles = styled.div`
   /* This is required to make the table full-width */
@@ -108,22 +107,13 @@ export default function EmployeesTable() {
   const columns = useMemo(() => COLUMNS, []);
   const data = useMemo(() => employees, []);
 
-  //Format date in order to sort it correctly, not used here but in columns.js 
-  const formatedEmployees = employees.map((employee) => {
-    employee.birthDate = format(new Date(employee.birthDate),'yyyy/MM/dd')
-    employee.startDate = format(new Date(employee.startDate),'yyyy/MM/dd')
-    return employee
-  })
-
-
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
     rows,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
+    page, // page has only the rows for the active page
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -145,7 +135,6 @@ export default function EmployeesTable() {
     usePagination
   );
 
-  //console.log("Hi there", rows.length);
   return (
     <Styles>
       <div className="tableWrap">
@@ -231,9 +220,11 @@ export default function EmployeesTable() {
             <span>
               Showing{" "}
               <strong>
-                {pageSize} to {pageSize} of {rows.length}
+                {/* calculate the number of entries and define if the last index calculated is upon the current last row index of your database */}
+                {pageIndex * pageSize + 1} to {pageIndex * pageSize + pageSize >= rows.length ? rows.length : pageIndex * pageSize + pageSize} of{" "}
+                {rows.length}
               </strong>{" "}
-              entries
+              results
             </span>
             <span>
               | Page{" "}

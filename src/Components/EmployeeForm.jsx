@@ -121,14 +121,15 @@ const ErrorField = styled.p`
 
 //Function part
 
+//YUP schema to avoid empty fields
 const schema = yup
   .object({
     firstName: yup.string().min(2).max(20),
     lastName: yup.string().min(2).max(20),
-    birthDate: yup.date().test("Unique", "Must be a valid date", (value) => {
+    birthDate: yup.date().test("Birth Date", "Must be a valid date", (value) => {
       return value;
     }),
-    startDate: yup.date().test("Unique", "Must be a valid date", (value) => {
+    startDate: yup.date().test("Start Date", "Must be a valid date", (value) => {
       return value;
     }),
     department: yup.string(),
@@ -149,14 +150,15 @@ export default function EmployeeForm() {
     control,
     reset,
   } = useForm({ resolver: yupResolver(schema) });
+
   const addEmployee = useStore((state) => state.addEmployee);
+  //Submit function
   const onSave = (data) => {
-    console.log("RESULT", data);
     addEmployee(data);
-    reset();
+    reset({ firstName: "", lastName: "", birthDate: "", startDate: "", department: "Sales", street: "", city: "", state: "Alabama", zipCode: "" });
     setShow(true);
   };
-  console.log("+++++++", errors);
+
   return (
     <Form onSubmit={handleSubmit(onSave)}>
       <InfoCtr>
@@ -168,7 +170,7 @@ export default function EmployeeForm() {
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="lastName">Last Name</label>
-            <input type="text" placeholder="Juno" {...register("lastName", { required: true, maxLength: 80 })} />
+            <input type="text" placeholder="Juno" {...register("lastName")} />
             <ErrorField>{errors.lastName && "Last name must be at least 2 characters"}</ErrorField>
           </InputWrapper>
           <InputWrapper>
@@ -176,9 +178,10 @@ export default function EmployeeForm() {
             <Controller
               name="birthDate"
               control={control}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <DatePicker
                   type="date"
+                  dateFormat="dd/MM/yyyy"
                   placeholderText="Select a date"
                   onChange={(date) => {
                     onChange(date);
@@ -190,16 +193,17 @@ export default function EmployeeForm() {
                 />
               )}
             />
-            <ErrorField>{errors.birthDate && "There must be a Date"}</ErrorField>
+            <ErrorField>{errors.birthDate && "Must be a valid Date"}</ErrorField>
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="startDate">Start date</label>
             <Controller
               name="startDate"
               control={control}
-              render={({ field: { onChange, onBlur, value, ref } }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <DatePicker
                   type="date"
+                  dateFormat="dd/MM/yyyy"
                   placeholderText="Select a date"
                   onChange={(date) => {
                     onChange(date);
@@ -211,7 +215,7 @@ export default function EmployeeForm() {
                 />
               )}
             />
-            <ErrorField>{errors.startDate && "There must be a Date"}</ErrorField>
+            <ErrorField>{errors.startDate && "Must be a valid Date"}</ErrorField>
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="department">Department</label>
@@ -238,7 +242,7 @@ export default function EmployeeForm() {
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="zipCode">Zip code</label>
-            <input type="number" placeholder="59000" {...register("zipCode", { required: true })} />
+            <input type="number" placeholder="59000" {...register("zipCode")} />
             <ErrorField>{errors.zipCode && "Please insert a correct Zip code"}</ErrorField>
           </InputWrapper>
         </AdressCtnr>

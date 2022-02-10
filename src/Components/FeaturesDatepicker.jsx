@@ -67,10 +67,12 @@ const MonthSelect = styled.select`
 `;
 
 //Function part
+// Define a Range of minus 60 years to + 3 years
 const years = range(getYear(new Date()) - 60, getYear(new Date()) + 3);
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 export function CustomHeader({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled }) {
+  //These 2 functions are here just to avoid the onClick on arrows to also submit the form
   const previousMonth = (e) => {
     e.preventDefault();
     decreaseMonth();

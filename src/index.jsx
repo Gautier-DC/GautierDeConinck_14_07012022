@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
       flex-direction: column;
       min-height: 100vh;
       background-color: ${colors.primary};
-      background-image: url('./hrimage.png');
+      background-image: url('./hr_background.svg');
       background-position: right ;
       min-width: 350px;
       max-width: 1280px;

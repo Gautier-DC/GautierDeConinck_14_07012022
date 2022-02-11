@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import useStore from "../store";
+import useStore from "../../store";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -9,8 +9,8 @@ import SelectInput from "./SelectInput";
 import { CustomHeader } from "./FeaturesDatepicker";
 import DatePicker from "react-datepicker";
 import { Modal } from "gdc-component-modal";
-import { departments, states } from "../selectLists";
-import colors from "../utils/style/colors";
+import { departments, states } from "../../selectLists";
+import colors from "../../utils/style/colors";
 
 //CSS part
 const Form = styled.form`
@@ -47,6 +47,7 @@ const EmployeeCtnr = styled.div`
 `;
 
 const AdressCtnr = styled.fieldset`
+  min-width: 0px;
   width: 100%;
   height: 100%;
   border-radius: 0.5em;

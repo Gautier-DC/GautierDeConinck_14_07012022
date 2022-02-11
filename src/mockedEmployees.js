@@ -147,4 +147,5 @@ export const mockedEmployees = [{"firstName":"Cindi","lastName":"Narraway","stre
 {"firstName":"Harwell","lastName":"Serfati","street":"2 Lindbergh Circle","city":"Waterbury","zipCode":"42","birthDate":"1990-01-06T02:32:24Z","startDate":"2020-03-23T05:28:39Z","department":"Business Development","state":"Connecticut"},
 {"firstName":"Florence","lastName":"McVie","street":"912 Mcguire Park","city":"Detroit","zipCode":"3","birthDate":"1990-02-04T01:16:46Z","startDate":"2002-11-29T13:13:11Z","department":"Marketing","state":"Michigan"},
 {"firstName":"Shaylyn","lastName":"Boreham","street":"23354 Old Shore Junction","city":"Houston","zipCode":"6551","birthDate":"1980-07-09T01:34:13Z","startDate":"2006-01-10T01:28:54Z","department":"Human Resources","state":"Texas"},
+{"firstName":"John","lastName":"Empty","street":" ","city":" ","zipCode":"","birthDate":"","startDate":"","department":"Human Resources","state":" "},
 {"firstName":"Billie","lastName":"Dugmore","street":"7 Del Mar Crossing","city":"Saint Louis","zipCode":"984","birthDate":"1968-10-23T17:35:58Z","startDate":"2014-10-19T18:12:13Z","department":"Human Resources","state":"Missouri"}]

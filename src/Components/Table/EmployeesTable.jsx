@@ -105,7 +105,7 @@ const Styles = styled.div`
 export default function EmployeesTable() {
   const employees = useStore((state) => state.employees);
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => employees, []);
+  const data = useMemo(() => employees, [employees]);
 
   const {
     getTableProps,

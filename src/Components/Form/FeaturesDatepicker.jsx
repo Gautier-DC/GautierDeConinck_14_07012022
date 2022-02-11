@@ -3,7 +3,7 @@ import { getMonth, getYear } from "date-fns";
 import range from "lodash/range";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
-import colors from "../utils/style/colors";
+import colors from "../../utils/style/colors";
 
 //CSS part
 const Arrow = styled.button`

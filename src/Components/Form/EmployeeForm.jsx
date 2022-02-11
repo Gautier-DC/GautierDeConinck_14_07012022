@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import useStore from "../store";
+import useStore from "../../store";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -8,8 +8,9 @@ import styled from "styled-components";
 import SelectInput from "./SelectInput";
 import { CustomHeader } from "./FeaturesDatepicker";
 import DatePicker from "react-datepicker";
-import { departments, states } from "../selectLists";
-import colors from "../utils/style/colors";
+import { Modal } from "gdc-component-modal";
+import { departments, states } from "../../selectLists";
+import colors from "../../utils/style/colors";
 
 //CSS part
 const Form = styled.form`
@@ -46,6 +47,7 @@ const EmployeeCtnr = styled.div`
 `;
 
 const AdressCtnr = styled.fieldset`
+  min-width: 0px;
   width: 100%;
   height: 100%;
   border-radius: 0.5em;
@@ -83,6 +85,14 @@ const InputWrapper = styled.div`
     border: none;
     box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
   }
+  .react-datepicker__day--outside-month {
+    color: #ccc8c8 !important;
+    pointer-events: none;
+  }
+  .react-datepicker__day--selected,
+  .react-datepicker__day--keyboard-selected {
+    background-color: ${colors.primary};
+  }
 `;
 
 const SaveBtn = styled.button`
@@ -112,12 +122,17 @@ const ErrorField = styled.p`
 
 //Function part
 
+//YUP schema to avoid empty fields
 const schema = yup
   .object({
     firstName: yup.string().min(2).max(20),
     lastName: yup.string().min(2).max(20),
-    birthDate: yup.string().min(1),
-    startDate: yup.date(),
+    birthDate: yup.date().test("Birth Date", "Must be a valid date", (value) => {
+      return value;
+    }),
+    startDate: yup.date().test("Start Date", "Must be a valid date", (value) => {
+      return value;
+    }),
     department: yup.string(),
     street: yup.string().min(5),
     city: yup.string().min(3),
@@ -127,6 +142,8 @@ const schema = yup
   .required();
 
 export default function EmployeeForm() {
+  const [show, setShow] = useState(false);
+
   const {
     register,
     formState: { errors },
@@ -134,13 +151,15 @@ export default function EmployeeForm() {
     control,
     reset,
   } = useForm({ resolver: yupResolver(schema) });
+
   const addEmployee = useStore((state) => state.addEmployee);
+  //Submit function
   const onSave = (data) => {
-    console.log("RESULT", data);
     addEmployee(data);
-    reset();
+    reset({ firstName: "", lastName: "", birthDate: "", startDate: "", department: "Sales", street: "", city: "", state: "Alabama", zipCode: "" });
+    setShow(true);
   };
-  console.log(errors);
+
   return (
     <Form onSubmit={handleSubmit(onSave)}>
       <InfoCtr>
@@ -152,7 +171,7 @@ export default function EmployeeForm() {
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="lastName">Last Name</label>
-            <input type="text" placeholder="Juno" {...register("lastName", { required: true, maxLength: 80 })} />
+            <input type="text" placeholder="Juno" {...register("lastName")} />
             <ErrorField>{errors.lastName && "Last name must be at least 2 characters"}</ErrorField>
           </InputWrapper>
           <InputWrapper>
@@ -160,40 +179,44 @@ export default function EmployeeForm() {
             <Controller
               name="birthDate"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <DatePicker
                   type="date"
+                  dateFormat="dd/MM/yyyy"
                   placeholderText="Select a date"
                   onChange={(date) => {
-                    field.onChange(date);
+                    onChange(date);
                   }}
-                  selected={field.value}
+                  onBlur={onBlur}
+                  selected={value}
                   renderCustomHeader={CustomHeader}
                   todayButton="Today"
                 />
               )}
             />
-            <ErrorField>{errors.birthDate && "Incorrect Date"}</ErrorField>
+            <ErrorField>{errors.birthDate && "Must be a valid Date"}</ErrorField>
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="startDate">Start date</label>
             <Controller
               name="startDate"
               control={control}
-              render={({ field }) => (
+              render={({ field: { onChange, onBlur, value } }) => (
                 <DatePicker
                   type="date"
+                  dateFormat="dd/MM/yyyy"
                   placeholderText="Select a date"
                   onChange={(date) => {
-                    field.onChange(date);
+                    onChange(date);
                   }}
-                  selected={field.value}
+                  onBlur={onBlur}
+                  selected={value}
                   renderCustomHeader={CustomHeader}
                   todayButton="Today"
                 />
               )}
             />
-            <ErrorField>{errors.startDate && "Incorrect Date"}</ErrorField>
+            <ErrorField>{errors.startDate && "Must be a valid Date"}</ErrorField>
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="department">Department</label>
@@ -220,12 +243,15 @@ export default function EmployeeForm() {
           </InputWrapper>
           <InputWrapper>
             <label htmlFor="zipCode">Zip code</label>
-            <input type="number" placeholder="59000" {...register("zipCode", { required: true })} />
+            <input type="number" placeholder="59000" {...register("zipCode")} />
             <ErrorField>{errors.zipCode && "Please insert a correct Zip code"}</ErrorField>
           </InputWrapper>
         </AdressCtnr>
       </InfoCtr>
       <SaveBtn type="submit">Save</SaveBtn>
+      <Modal title="Employé créé" onClose={() => setShow(false)} show={show}>
+        <p>L'employé a été ajouté à la base !</p>
+      </Modal>
     </Form>
   );
 }

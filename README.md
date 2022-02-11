@@ -1,36 +1,37 @@
 # GautierDeConinck_14_07012022
 
-Hrnet (Front End part) for Project 14 of OpenClassRooms Front Dev courses.
+Hrnet (Front End part) for Project 14 of OpenClassRooms Front-End Dev courses. The objective was to turn an old JQuery website into a full react app. In this project I wanted to have a little bit of fun and improve my skill with different libraries like react-hook-form or react-datepicker for example. So this project have few dependencies to install.
 
 ## Requirements
 
-You need to install Node.js v14.15.4 or latestversion.
+First of all You need to install Node.js v14.15.4 or latest version.
 
-## Used Technologies
+## Used Technologies / Dependencies
 
 - React :
   - Create react app
   - PropTypes
   - ReactRouter
   - Styled-components
-- Zustand (for state management)
-- Axios
+  - react-hook-form
+  - react-datepicker
+  - react-table
+- Zustand
+- yup
+- date-fns
+- gdc-component-modal (custom modal package that I made, you can find documentation here : https://www.npmjs.com/package/gdc-component-modal )
 
 ## Install
 
-- Clone the following repository https://github.com/Gautier-DC/GautierDeConinck_14_07012022
+- Clone the following repository on your computer https://github.com/Gautier-DC/GautierDeConinck_14_07012022
 
 - Open your local folder in your code editor then, in a new terminal, run `npm install`
 
 You are all ready.
 
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
-In the project directory, you can run:
+This is a classical Create React App so in the project directory, you can run:
 
 ### `npm start`
 
@@ -59,38 +60,14 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+If you aren't satisfied with the build tool and configuration choices, you can eject at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except eject will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+You don't have to ever use eject. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

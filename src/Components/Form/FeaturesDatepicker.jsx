@@ -1,18 +1,11 @@
 import React from "react";
-import DatePicker from "react-datepicker";
-import { useState } from "react";
-import { getDate, getMonth, getYear } from "date-fns";
+import { getMonth, getYear } from "date-fns";
 import range from "lodash/range";
 import styled from "styled-components";
 import "react-datepicker/dist/react-datepicker.css";
-import colors from "../utils/style/colors";
+import colors from "../../utils/style/colors";
 
 //CSS part
-
-const CustomDatePicker = styled(DatePicker)`
-  width: 100%;
-`;
-
 const Arrow = styled.button`
   background-color: #f0f0f0;
   appearance: none;
@@ -65,6 +58,7 @@ const DateSelect = styled.select`
   text-align: right;
   width: 35%;
 `;
+
 const MonthSelect = styled.select`
   background-color: transparent;
   border: none;
@@ -73,20 +67,25 @@ const MonthSelect = styled.select`
 `;
 
 //Function part
-const years = range(1940, getYear(new Date()) + 1, 1);
+// Define a Range of minus 60 years to + 3 years
+const years = range(getYear(new Date()) - 60, getYear(new Date()) + 3);
 const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
 export function CustomHeader({ date, changeYear, changeMonth, decreaseMonth, increaseMonth, prevMonthButtonDisabled, nextMonthButtonDisabled }) {
-  // const onMonthChange = ({ target: { value } }) => {
-  //   changeMonth(months.indexOf(value));
-  //   setCurrentMonth(value);
-  //   console.log("+++++", currentMonth);
-  // };
+  //These 2 functions are here just to avoid the onClick on arrows to also submit the form
+  const previousMonth = (e) => {
+    e.preventDefault();
+    decreaseMonth();
+  }
+  const nextMonth = (e) => {
+    e.preventDefault();
+    increaseMonth();
+  }
   return (
     <CalendarHeader>
-      <ArrowLeft onClick={decreaseMonth} disabled={prevMonthButtonDisabled}></ArrowLeft>
+      <ArrowLeft onClick={previousMonth} disabled={prevMonthButtonDisabled}></ArrowLeft>
       <div>
-        <MonthSelect value={months[date.getMonth()]}>
+        <MonthSelect value={months[getMonth(date)]} onChange={({ target: { value } }) => changeMonth(months.indexOf(value))}>
           {months.map((option) => (
             <option key={option} value={option}>
               {option}
@@ -101,33 +100,7 @@ export function CustomHeader({ date, changeYear, changeMonth, decreaseMonth, inc
           ))}
         </DateSelect>
       </div>
-      <ArrowRight onClick={increaseMonth} disabled={nextMonthButtonDisabled}></ArrowRight>
+      <ArrowRight onClick={nextMonth} disabled={nextMonthButtonDisabled}></ArrowRight>
     </CalendarHeader>
-  );
-}
-
-export function DateInput({ register, name, registerOptions, ...rest }) {
-  const [startDate, setStartDate] = useState(new Date());
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-
-  const renderDayContents = (day, date) => {
-    const tooltipText = `For datessssss: ${date}`;
-    return (
-      <span style={{ backgroundColor: "red" }} title={tooltipText}>
-        {getDate(date)}
-      </span>
-    );
-  };
-  // custom header for date picker
-  return (
-    <CustomDatePicker
-      shouldCloseOnSelect={false}
-      renderCustomHeader={CustomHeader}
-      selected={startDate}
-      dropdownMode="select"
-      todayButton="Today"
-      calendarClassName="calendar-custom"
-      renderDayContents={renderDayContents}
-    />
   );
 }

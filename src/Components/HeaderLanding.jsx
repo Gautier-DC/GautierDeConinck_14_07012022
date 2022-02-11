@@ -8,9 +8,9 @@ const HeaderContainer = styled.header`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 4em 4em 0 4em; 
+  margin: 4em 4em 0 4em;
   padding: 1em 2em;
-  background-color: rgba(255,255,255, 0.9);
+  background-color: rgba(255, 255, 255, 0.9);
   border-radius: 1em 1em 0 0;
 `;
 
@@ -30,20 +30,18 @@ const NavItem = styled(Link)`
   transition: all 0.3s;
   :hover {
     background-color: ${colors.tertiary};
-    color: #FFF;
-    border-radius: 0.5em
+    color: #fff;
+    border-radius: 0.5em;
   }
 `;
-
-
 
 export default function HeaderLanding() {
   return (
     <HeaderContainer>
-        <HeaderLogo to='/'>
-            <img src="./logo-hrnet-500.png" alt="HRnet logo" />
-        </HeaderLogo>
-        <NavItem to='/employee-list'>View Current Employees</NavItem>
+      <HeaderLogo to="/">
+        <img src="./logo-hrnet-500.png" alt="HRnet logo" />
+      </HeaderLogo>
+      <NavItem to="/employee-list">View Current Employees</NavItem>
     </HeaderContainer>
-  )
+  );
 }

@@ -90,7 +90,7 @@ const Styles = styled.div`
     align-items: center;
     padding: 0.5rem;
     margin-top: 1em;
-    button{
+    button {
       color: ${colors.primary};
     }
   }
@@ -104,17 +104,16 @@ const Styles = styled.div`
 
 export default function EmployeesTable() {
   const employees = useStore((state) => state.employees);
-  console.log("Hi there", employees);
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => employees, []);
+  const data = useMemo(() => employees, [employees]);
 
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page, // Instead of using 'rows', we'll use page,
-    // which has only the rows for the active page
+    rows,
+    page, // page has only the rows for the active page
     canPreviousPage,
     canNextPage,
     pageOptions,
@@ -183,13 +182,18 @@ export default function EmployeesTable() {
             }
           </thead>
           <tbody {...getTableBodyProps()}>
-            {
+            {rows.length === 0 ? (
+              <tr>
+                <td colSpan="9" style={{ fontSize: "1.5em", backgroundColor: "rgba(229, 80, 57,0.3)" }}>
+                  there is no result
+                </td>
+              </tr>
+            ) : (
               // Loop over the table rows
               page.map((row) => {
                 // Prepare the row for display
                 prepareRow(row);
                 return (
-                  // Apply the row props
                   <tr {...row.getRowProps()}>
                     {
                       // Loop over the rows cells
@@ -208,13 +212,22 @@ export default function EmployeesTable() {
                   </tr>
                 );
               })
-            }
+            )}
           </tbody>
         </table>
         <div className="pagination">
           <div>
             <span>
-              Page{" "}
+              Showing{" "}
+              <strong>
+                {/* calculate the number of entries and define if the last index calculated is upon the current last row index of your database */}
+                {pageIndex * pageSize + 1} to {pageIndex * pageSize + pageSize >= rows.length ? rows.length : pageIndex * pageSize + pageSize} of{" "}
+                {rows.length}
+              </strong>{" "}
+              results
+            </span>
+            <span>
+              | Page{" "}
               <strong>
                 {pageIndex + 1} of {pageOptions.length}
               </strong>{" "}

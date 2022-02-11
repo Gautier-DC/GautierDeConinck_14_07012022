@@ -1,8 +1,7 @@
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import colors from "../utils/style/colors";
-import EmployeeForm from "../Components/EmployeeForm";
+import EmployeeForm from "../Components/Form/EmployeeForm";
 import HeaderLanding from "../Components/HeaderLanding";
 
 const Title = styled.h1`
